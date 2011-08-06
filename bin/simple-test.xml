@@ -1,0 +1,12 @@
+<response cycle="001" cvus="000" thread="001" suite="Simple" name="test_simple" step="001" number="001" type="get" result="Failure" url="" code="404" description="get url" time="1312588027.59" duration="0.00258588790894">
+  <headers>
+    <header name="connection" value="close" />
+    <header name="content-type" value="text/plain" />
+    <header name="x-powered-by" value="Express" />
+  </headers>
+  <body><![CDATA[
+Cannot GET /
+]]>
+  </body>
+</response>
+<testResult cycle="001" cvus="000" thread="001" suite="Simple" name="test_simple"  time="1312588027.59" result="Failure" steps="1" duration="0.00321888923645" connection_duration="0.00258588790894" requests="1" pages="0" xmlrpc="0" redirects="0" images="0" links="0" traceback="Traceback (most recent call last):&#10;   File &quot;/usr/lib/pymodules/python2.7/funkload/FunkLoadTestCase.py&quot;, line 868, in __call__&#10;    testMethod()&#10;   File &quot;/home/borgers/projects/drenderer/bin/test_simple.py&quot;, line 11, in test_simple&#10;    res = self.get(server_url, description='get url')&#10;   File &quot;/usr/lib/pymodules/python2.7/funkload/FunkLoadTestCase.py&quot;, line 373, in get&#10;    method=&quot;get&quot;)&#10;   File &quot;/usr/lib/pymodules/python2.7/funkload/FunkLoadTestCase.py&quot;, line 289, in _browse&#10;    response = self._connect(url, params, ok_codes, method, description)&#10;   File &quot;/usr/lib/pymodules/python2.7/funkload/FunkLoadTestCase.py&quot;, line 207, in _connect&#10;    raise self.failureException, str(value.response)&#10; AssertionError: &#10;HTTP Response 404: Not Found&#10;" />

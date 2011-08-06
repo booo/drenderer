@@ -1,0 +1,7 @@
+2011-08-06 01:44:57,906 DEBUG test_simple: Starting -----------------------------------
+	demo app
+2011-08-06 01:47:07,586 DEBUG test_simple: Starting -----------------------------------
+	demo app
+2011-08-06 01:47:07,586 DEBUG test_simple: GET: http://localhost:3000
+	Page 1: get url ...
+2011-08-06 01:47:07,589 DEBUG test_simple:  Failed in 0.003s

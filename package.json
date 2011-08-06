@@ -1,0 +1,31 @@
+{
+  "name": "drenderer",
+  "description": "distributeded tile renderer based on mapnik, redis, kue",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "dependencies": {
+    "redis": "*",
+    "hiredis": "*",
+    "kue": "*",
+    "coffee-script": ">= 1.1.0",
+    "express": "*",
+    "async": "*",
+    "log4js": "*",
+    "underscore": "*",
+    "mapnik": "*",
+    "sphericalmercator": "*",
+    "mersenne": "*",
+    "superagent": "*",
+    "get": "*"
+  },
+  "devDependencies": {
+  },
+  "main": "./lib/index.js",
+  "engines": { "node": "*" },
+  "scripts": {
+    "test": "cake test"
+  }
+}
