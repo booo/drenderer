@@ -21,7 +21,7 @@
     "superagent": "*",
     "get": "*",
     "memcached": "*",
-    "generic-pool"
+    "generic-pool", "*"
   },
   "devDependencies": {
   },
