@@ -19,7 +19,9 @@
     "sphericalmercator": "*",
     "mersenne": "*",
     "superagent": "*",
-    "get": "*"
+    "get": "*",
+    "memcached": "*",
+    "generic-pool"
   },
   "devDependencies": {
   },

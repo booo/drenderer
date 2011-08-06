@@ -6,6 +6,8 @@ jobs = kue.createQueue()
 redis = require "redis"
 
 rclient = redis.createClient()
+nMemcached = require "memcached"
+memcached = new nMemcached "localhost:11211"
 
 express = require "express"
 
@@ -39,18 +41,23 @@ app.get "/:style/:z/:x/:y.png", (req, res, next) ->
 
   if activeJobs[key]
     activeJobs[key].on "complete", ->
-      rclient.get "#{tile.style}/#{tile.z}/#{tile.x}/#{tile.y}", (error, renderedTile) ->
+      memcached.get key, (error, renderedTile) ->
+        #console.log renderedTile
+      #rclient.get "#{tile.style}/#{tile.z}/#{tile.x}/#{tile.y}", (error, renderedTile) ->
         if error
           next error
         else if renderedTile
-          renderedTile = JSON.parse renderedTile
+          #renderedTile = JSON.parse renderedTile
           res.send (new Buffer renderedTile.data, "base64"), { "Content-Type": "image/png"}, 200
         else
           next()
   else
-    rclient.get key, (error, renderedTile) ->
-      if renderedTile
-        renderedTile = JSON.parse renderedTile
+    memcached.get key, (error, renderedTile) ->
+      if error
+        next error
+      else if renderedTile
+        #console.log renderedTile
+        #renderedTile = JSON.parse renderedTile
         res.send (new Buffer renderedTile.data, "base64"), { "Content-Type": "image/png"}, 200
 
       else
@@ -64,13 +71,22 @@ app.get "/:style/:z/:x/:y.png", (req, res, next) ->
           res.end()
         job.on "complete", ->
           delete activeJobs[key]
-          rclient.get "#{tile.style}/#{tile.z}/#{tile.x}/#{tile.y}", (error, renderedTile) ->
+          #rclient.get "#{tile.style}/#{tile.z}/#{tile.x}/#{tile.y}", (error, renderedTile) ->
+          memcached.get key, (error, renderedTile) ->
             if error
               next error
             else if renderedTile
-              renderedTile = JSON.parse renderedTile
+              #renderedTile = JSON.parse renderedTile
+              #console.log renderedTile
               res.send (new Buffer renderedTile.data, "base64"), { "Content-Type": "image/png"}, 200
             else
+              console.log "bla"
               next()
+
+
+getTileFromStore = (key, fn) ->
+
+  memcached.get key, (error, result) ->
+    fn(error, result)
 
 app.listen 3000

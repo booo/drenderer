@@ -5,6 +5,10 @@ path = require "path"
 redis = require "redis"
 rclient = redis.createClient()
 
+nMemcached = require "memcached"
+
+memcached = new nMemcached "localhost:11211"
+
 mapnik = require "mapnik"
 mappool = require "../node_modules/mapnik/lib/pool"
 SphericalMercator = require "sphericalmercator"
@@ -54,11 +58,20 @@ jobs.process "tile", 5, (job, done) ->
           done error
         else
           tile.data = (im.encodeSync "png").toString("base64")
+          tile.nMemcached = true
           #console.log tile
           key = "#{tile.style}/#{tile.z}/#{tile.x}/#{tile.y}"
-          rclient.set key, (JSON.stringify tile), (error, result)->
-            if error then console.log error
-            rclient.expire key, tile.ttl, (error, result) ->
-              if error then console.log error
-            done()
+          #console.log key
+          memcached.set key, tile, 10000, (error, result) ->
+            if error
+              done error
+            else
+              #console.log result
+              done()
+
+          #rclient.set key, (JSON.stringify tile), (error, result)->
+          #  if error then console.log error
+          #  rclient.expire key, tile.ttl, (error, result) ->
+          #    if error then console.log error
+          #  done()
 
